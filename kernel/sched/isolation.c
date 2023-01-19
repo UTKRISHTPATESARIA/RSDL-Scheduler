@@ -180,8 +180,6 @@ free_non_housekeeping_mask:
 static int __init housekeeping_nohz_full_setup(char *str)
 {
 	unsigned long flags;
-	pr_warn("\n\n\n\n\nNOHZ\n-------------%s------------\n\n\n\n", str);
-
 	flags = HK_FLAG_TICK | HK_FLAG_WQ | HK_FLAG_TIMER | HK_FLAG_RCU |
 		HK_FLAG_MISC | HK_FLAG_KTHREAD;
 
@@ -191,7 +189,6 @@ __setup("nohz_full=", housekeeping_nohz_full_setup);
 
 static int __init housekeeping_isolcpus_setup(char *str)
 {
-	pr_warn("\n\n\n\n\nISOLCPUS\n-------------%s------------\n\n\n\n", str);
 	unsigned long flags = 0;
 	bool illegal = false;
 	char *par;
