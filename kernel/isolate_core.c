@@ -2,13 +2,16 @@
 #include <linux/sched/isolation.h>
 #include <linux/cpu.h>
 
-SYSCALL_DEFINE0(isolate_core)
+SYSCALL_DEFINE1(isolate_core, int, cpuid)
 {
-  /*char *buf = "nohz_buf=0 , isolcpus=nohz,domain,managed_irq,0";
+  /*
+  char *buf = "nohz_buf=0 , isolcpus=nohz,domain,managed_irq,0";
   housekeeping_nohz_full_setup(buf);
   housekeeping_isolcpus_setup(buf);*/
+
   printk(KERN_INFO "********* Starting CPU0 Isolation process *********\n");
-  remove_cpu(0);
-  
+  /*Put CPU0 offline*/
+  remove_cpu(cpuid);
+
   return 0;
 }

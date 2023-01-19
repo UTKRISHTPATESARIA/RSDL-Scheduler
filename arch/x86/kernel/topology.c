@@ -42,7 +42,10 @@ static DEFINE_PER_CPU(struct x86_cpu, cpu_devices);
 #ifdef CONFIG_BOOTPARAM_HOTPLUG_CPU0
 static int cpu0_hotpluggable = 1;
 #else
-static int cpu0_hotpluggable;
+
+/* Changed the value to 1, implicity CPU0 is always hot pluggable*/
+
+static int cpu0_hotpluggable = 1;
 static int __init enable_cpu0_hotplug(char *str)
 {
 	cpu0_hotpluggable = 1;
