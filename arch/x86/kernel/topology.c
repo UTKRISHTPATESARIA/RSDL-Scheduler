@@ -43,7 +43,7 @@ static DEFINE_PER_CPU(struct x86_cpu, cpu_devices);
 static int cpu0_hotpluggable = 1;
 #else
 
-/* Changed the value to 1, implicity CPU0 is always hot pluggable*/
+/* Changed the value to 1mlll, implicity CPU0 is always hot pluggable*/
 
 static int cpu0_hotpluggable = 1;
 static int __init enable_cpu0_hotplug(char *str)
