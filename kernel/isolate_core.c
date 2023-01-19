@@ -10,7 +10,7 @@ SYSCALL_DEFINE1(isolate_core, int, cpuid)
   housekeeping_isolcpus_setup(buf);*/
 
   printk(KERN_INFO "********* Starting CPU0 Isolation process *********\n");
-  /*Put CPU0 offline*/
+  /*Put any offline*/
   remove_cpu(cpuid);
 
   return 0;
