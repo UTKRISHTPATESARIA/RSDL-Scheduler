@@ -5008,7 +5008,6 @@ static ssize_t __cgroup_procs_write(struct kernfs_open_file *of, char *buf,
 	dst_cgrp = cgroup_kn_lock_live(of->kn, false);
 	if (!dst_cgrp)
 		return -ENODEV;
-
 	task = cgroup_procs_write_start(buf, threadgroup, &threadgroup_locked);
 	ret = PTR_ERR_OR_ZERO(task);
 	if (ret)
@@ -5569,7 +5568,8 @@ int cgroup_mkdir(struct kernfs_node *parent_kn, const char *name, umode_t mode)
 	/* do not accept '\n' to prevent making /proc/<pid>/cgroup unparsable */
 	if (strchr(name, '\n'))
 		return -EINVAL;
-
+	
+	
 	parent = cgroup_kn_lock_live(parent_kn, false);
 	if (!parent)
 		return -ENODEV;

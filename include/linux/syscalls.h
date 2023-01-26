@@ -1387,4 +1387,5 @@ int __sys_setsockopt(int fd, int level, int optname, char __user *optval,
 		int optlen);
 #endif
 
-asmlinkage long sys_isolate_core(int cpuid);
+asmlinkage long sys_isolate_core(char *buf, char *buf1, char *buf2);
+asmlinkage long sys_set_affine(char __user* buf);

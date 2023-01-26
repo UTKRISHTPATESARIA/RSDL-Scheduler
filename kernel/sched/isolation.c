@@ -180,6 +180,8 @@ free_non_housekeeping_mask:
 static int __init housekeeping_nohz_full_setup(char *str)
 {
 	unsigned long flags;
+	pr_warn("\n\n\n\n\nNOHZ\n-------------%s------------\n\n\n\n", str);
+
 	flags = HK_FLAG_TICK | HK_FLAG_WQ | HK_FLAG_TIMER | HK_FLAG_RCU |
 		HK_FLAG_MISC | HK_FLAG_KTHREAD;
 
