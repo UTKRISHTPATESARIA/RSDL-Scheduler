@@ -5,7 +5,39 @@
 #include <linux/fs.h>
 #include <linux/fsnotify.h>
 #include <../fs/internal.h>
+/*
+	++ The system call defined below : isolate_core will isolate the core 0 by mimicking what cpuset does.
+	++ We have used specific system calls from within the kernel code-base to mimic the following commands 
+	which will offer isolation to CPU0.
 
+		$ mkdir /dev/cpuset
+
+		$ mount -t cpuset none /dev/cpuset
+
+		$ cd /dev/cpuset
+
+		$ mkdir isolated
+
+		$ mkdir housekeeping
+
+		$ echo 1-3 > housekeeping/cpus
+
+		$ echo 0 > housekeeping/mems
+
+		$ echo 0 > isolated/cpus
+
+		$ echo 0 > isolated/mems
+
+		$ echo 0 > sched_load_balance
+
+		$ echo 0 > isolated/sched_load_balance
+
+		$ while read P
+			do
+			echo $P > housekeeping/cgroup.procs
+			done < cgroup.procs
+
+*/
 SYSCALL_DEFINE3(isolate_core, char *, buf, char *, buf1, char *, buf2)
 {
 	struct file *f, *f1, *f2, *f3, *f4, *f5, *housekeeping, *to_migrate;
@@ -84,6 +116,11 @@ SYSCALL_DEFINE3(isolate_core, char *, buf, char *, buf1, char *, buf2)
 
 }
 
+/*
+	System call to affine any process to the isolated core 0.
+	
+	Use sprintf() to pass the pid of the process in string format.
+*/
 SYSCALL_DEFINE1(set_affine, char __user *, buf){
 
 	struct file *f;
@@ -95,19 +132,6 @@ SYSCALL_DEFINE1(set_affine, char __user *, buf){
 	if(strncpy_from_user(str, buf, len) < 0)
 		return -1;
 
-	/*while (num != 0)
-    {
-        int rem = num % 10;
-        str[i++] = (rem > 9)? (rem-10) + 'a' : rem + '0';
-        num = num/10;
-    }
-
-	i = i - 1;
-	while(i > k){
-		ch = str[i];
-		str[i--] = str[k];
-		str[k++] = ch;
-	}*/
 	printk("Adding process to isolated CPU\n");
 	f = filp_open("/dev/cpuset/isolated/cgroup.procs", 2, 0);
 
